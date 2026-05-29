@@ -60,19 +60,24 @@ pipeline {
             }
         }
 
-       
+       stage('Set Kubeconfig') {
+    steps {
+        bat '''
+        set KUBECONFIG=C:\\ProgramData\\Jenkins\\.kube\\config
+        kubectl get nodes
+        '''
+    }
+}
 
         stage('Deploy Kubernetes') {
-
             steps {
-
                 bat '''
+                kubectl apply -f k8s/
                 kubectl set image deployment/springboot-cicd springboot-cicd=%IMAGE_NAME%:%IMAGE_TAG%
                 '''
             }
         }
     }
-
     post {
 
         success {
