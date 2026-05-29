@@ -60,12 +60,7 @@ pipeline {
             }
         }
 
-        stage('Load Image into Minikube') {
-
-            steps {
-                bat 'minikube image load %IMAGE_NAME%:%IMAGE_TAG%'
-            }
-        }
+       
 
         stage('Deploy Kubernetes') {
 
