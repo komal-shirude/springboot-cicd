@@ -69,15 +69,25 @@ pipeline {
     }
 }
 
-        stage('Deploy Kubernetes') {
-            steps {
-                bat '''
-                kubectl apply -f k8s/
-                kubectl set image deployment/springboot-cicd springboot-cicd=%IMAGE_NAME%:%IMAGE_TAG%
-                '''
-            }
-        }
+stage('Verify Kubernetes Connection') {
+    steps {
+        bat '''
+        set KUBECONFIG=C:\\ProgramData\\Jenkins\\.kube\\config
+        kubectl get nodes
+        '''
     }
+}
+
+        stage('Deploy Kubernetes') {
+    steps {
+        bat '''
+        set KUBECONFIG=C:\\ProgramData\\Jenkins\\.kube\\config
+        kubectl config current-context
+        kubectl apply -f k8s/
+        kubectl set image deployment/springboot-cicd springboot-cicd=komalshirode/springboot-cicd:%BUILD_NUMBER%
+        '''
+    }
+}
     post {
 
         success {
