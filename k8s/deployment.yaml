@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: springboot-cicd
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: springboot-cicd
+
+  template:
+    metadata:
+      labels:
+        app: springboot-cicd
+
+    spec:
+      containers:
+      - name: springboot-cicd
+
+        image: springboot-cicd:latest
+
+        imagePullPolicy: Never
+
+        ports:
+        - containerPort: 9878
