@@ -88,6 +88,7 @@ stage('Verify Kubernetes Connection') {
         '''
     }
 }
+}
     post {
 
         success {
